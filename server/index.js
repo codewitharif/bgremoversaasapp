@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv").config();
 const connectDB = require("./config/db");
+const userRoutes = require("./models/userModel");
 
 const app = express();
 const PORT = 5000;
@@ -17,6 +18,8 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("Hello from Express server!");
 });
+
+app.use("/api/user", userRoutes);
 
 // Start server
 app.listen(PORT, () => {

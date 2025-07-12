@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 5,
   },
+  currentPlan: {
+    type: String,
+    default: "Free",
+  },
 });
 
 const User = mongoose.model("User", userSchema);

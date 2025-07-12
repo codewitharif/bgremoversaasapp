@@ -1,15 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AppContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 
 const Result = () => {
-  // Sample image URLs (replace with your actual image paths or state)
-  const originalImage =
-    "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80";
-  const resultImage =
-    "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80&bg=FFFFFF00"; // Mock transparent BG
+  const { resultImage, image, isLoading, isProcessing } =
+    useContext(AppContext);
+  const navigate = useNavigate();
+
+  const handleDownload = () => {
+    if (!resultImage) return;
+
+    const link = document.createElement("a");
+    link.href = resultImage;
+    link.download = "background-removed.png";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleTryAnother = () => {
+    navigate("/");
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
-
       {/* Main Content */}
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
@@ -35,11 +50,17 @@ const Result = () => {
                 </span>
               </div>
               <div className="border-2 border-dashed border-gray-300 rounded-lg overflow-hidden">
-                <img
-                  src={originalImage}
-                  alt="Original"
-                  className="w-full h-auto object-contain max-h-96 mx-auto"
-                />
+                {image ? (
+                  <img
+                    src={URL.createObjectURL(image)}
+                    alt="Original"
+                    className="w-full h-auto object-contain max-h-96 mx-auto"
+                  />
+                ) : (
+                  <div className="h-96 flex items-center justify-center text-gray-500">
+                    No original image found
+                  </div>
+                )}
               </div>
             </div>
 
@@ -54,58 +75,70 @@ const Result = () => {
                 </span>
               </div>
               <div className="border-2 border-dashed border-gray-300 rounded-lg overflow-hidden bg-checkerboard">
-                <img
-                  src={resultImage}
-                  alt="Background Removed"
-                  className="w-full h-auto object-contain max-h-96 mx-auto"
-                />
+                {isProcessing ? (
+                  <Loader />
+                ) : resultImage ? (
+                  <img
+                    src={resultImage}
+                    alt="Background Removed"
+                    className="w-full h-auto object-contain max-h-96 mx-auto"
+                  />
+                ) : (
+                  <div className="h-96 flex items-center justify-center text-gray-500">
+                    {image ? "Processing failed" : "No image to process"}
+                  </div>
+                )}
               </div>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="bg-gray-50 px-6 py-4 flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-            <button
-              type="button"
-              className="inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              <svg
-                className="-ml-1 mr-3 h-5 w-5 text-gray-500"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+          {resultImage && (
+            <div className="bg-gray-50 px-6 py-4 flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
+              <button
+                type="button"
+                onClick={handleTryAnother}
+                className="inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
-                />
-              </svg>
-              Try Another Image
-            </button>
-            <button
-              type="button"
-              className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              <svg
-                className="-ml-1 mr-3 h-5 w-5"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+                <svg
+                  className="-ml-1 mr-3 h-5 w-5 text-gray-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                  />
+                </svg>
+                Try Another Image
+              </button>
+              <button
+                type="button"
+                onClick={handleDownload}
+                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                />
-              </svg>
-              Download Result
-            </button>
-          </div>
+                <svg
+                  className="-ml-1 mr-3 h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                  />
+                </svg>
+                Download Result
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Tips Section */}

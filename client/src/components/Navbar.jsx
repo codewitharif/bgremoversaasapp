@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import {
   SignedIn,
   SignedOut,
@@ -7,10 +7,23 @@ import {
   UserButton,
   useUser,
 } from "@clerk/clerk-react";
-
+import { AppContext } from "../context/AppContext";
+import coin from "../assets/coin.png";
 const Navbar = () => {
   const { openSignIn } = useClerk();
   const { isSignedIn, user } = useUser();
+
+  const { credit, loadcreditsData } = useContext(AppContext);
+
+  //   useEffect(() => {
+  //     loadcreditsData();
+  //   }, []);
+
+  useEffect(() => {
+    if (isSignedIn) {
+      loadcreditsData();
+    }
+  }, [isSignedIn]);
   return (
     <>
       {/* Navigation */}
@@ -66,7 +79,16 @@ const Navbar = () => {
             </div>
             <div className="flex items-center">
               {isSignedIn ? (
-                <div>
+                <div className="flex items-center gap-3">
+                  <button className="flex items-center gap-1.5 bg-blue-50 hover:bg-blue-100 px-3 py-1 rounded-full text-sm font-medium border border-blue-200">
+                    <img
+                      src={coin}
+                      alt="Credits"
+                      className="h-4 w-4 object-contain" // Adjusted size to be smaller
+                    />
+                    <span className="text-gray-500">Credits:</span>
+                    <span className="font-bold text-blue-600">{credit}</span>
+                  </button>
                   <UserButton />
                 </div>
               ) : (

@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AppContext } from "../context/AppContext";
+
+
 
 const Hero = () => {
+  const { removeBg } = useContext(AppContext);
   return (
-    
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <div className="relative bg-white overflow-hidden">
@@ -21,20 +24,30 @@ const Hero = () => {
                 </p>
                 <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                   <div className="rounded-md shadow">
-                    <a
-                      href="#"
-                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
-                    >
-                      Try It Free
-                    </a>
-                  </div>
-                  <div className="mt-3 sm:mt-0 sm:ml-3">
-                    <a
-                      href="#"
-                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10"
-                    >
-                      See Demo
-                    </a>
+                    <label className="w-full flex items-center justify-center gap-2 px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10 cursor-pointer">
+                      {/* Upload Icon */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M12 12V4m0 0l-4 4m4-4l4 4"
+                        />
+                      </svg>
+                      Upload Image
+                      <input
+                        type="file"
+                        onChange={(e) => removeBg(e.target.files[0])}
+                        accept="image/*"
+                        className="hidden"
+                      />
+                    </label>
                   </div>
                 </div>
               </div>

@@ -72,7 +72,11 @@ const userCredits = async (req, res) => {
     const { clerkId } = req;
     // console.log("my controller clerkid", clerkId);
     const userData = await User.findOne({ clerkId });
-    res.json({ success: true, credits: userData.creditBalance });
+    res.json({
+      success: true,
+      credits: userData.creditBalance,
+      currentPlan: userData.currentPlan,
+    });
   } catch (error) {
     console.error("Webhook error:", error);
     return res.json({ success: false, message: error.message });

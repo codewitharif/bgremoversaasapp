@@ -2,20 +2,22 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-// Create uploads directory if it doesn't exist
-const uploadDir = "uploads";
+// ✅ Use /tmp/uploads on Vercel (only writable directory)
+const uploadDir = path.join("/tmp", "uploads");
+
+// ✅ Create the folder if it doesn't exist
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, uploadDir);
+    cb(null, uploadDir); // ✅ Safe path
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     const ext = path.extname(file.originalname);
-    cb(null, uniqueSuffix + ext); // e.g., 1623456789123-123456789.png
+    cb(null, uniqueSuffix + ext);
   },
 });
 
@@ -40,7 +42,7 @@ const upload = multer({
   fileFilter: fileFilter,
   limits: {
     fileSize: 5 * 1024 * 1024, // 5MB limit
-    files: 1, // Limit to 1 file
+    files: 1,
   },
 });
 

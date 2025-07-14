@@ -175,14 +175,16 @@ const Pricing = () => {
 
             <div className="border border-gray-200 rounded-lg shadow-sm divide-y divide-gray-200">
               <div className="p-6">
-                <h2 className="text-lg leading-6 font-medium text-gray-900">
-                  Professional
-                </h2>
-                {currentPlan === "Enterprise" && (
-                  <span className="inline-block mt-2 px-3 py-1 text-sm bg-green-100 text-green-800 rounded-full">
-                    Current Plan
-                  </span>
-                )}
+                <div className="flex gap-2 items-center">
+                  <h2 className="text-lg leading-6 font-medium text-gray-900">
+                    Professional
+                  </h2>
+                  {currentPlan === "Enterprise" && (
+                    <span className="inline-block mt-2 px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded-full">
+                      Current Plan
+                    </span>
+                  )}
+                </div>
 
                 <p className="mt-4 text-sm text-gray-500">
                   For professionals and small businesses
@@ -281,14 +283,16 @@ const Pricing = () => {
 
             <div className="border border-gray-200 rounded-lg shadow-sm divide-y divide-gray-200">
               <div className="p-6">
-                <h2 className="text-lg leading-6 font-medium text-gray-900">
-                  Enterprise
-                </h2>
-                {currentPlan === "Enterprise" && (
-                  <span className="inline-block mt-2 px-3 py-1 text-sm bg-green-100 text-green-800 rounded-full">
-                    Current Plan
-                  </span>
-                )}
+                <div className="flex gap-2 items-center">
+                  <h2 className="text-lg leading-6 font-medium text-gray-900">
+                    Enterprise
+                  </h2>
+                  {currentPlan === "Enterprise" && (
+                    <span className="inline-block mt-2 px-3 py-1 text-sm bg-green-100 text-green-800 rounded-full">
+                      Current Plan
+                    </span>
+                  )}
+                </div>
 
                 <p className="mt-4 text-sm text-gray-500">
                   For high-volume needs

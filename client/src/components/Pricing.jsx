@@ -85,14 +85,16 @@ const Pricing = () => {
           <div className="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0">
             <div className="border border-gray-200 rounded-lg shadow-sm divide-y divide-gray-200">
               <div className="p-6">
-                <h2 className="text-lg leading-6 font-medium text-gray-900">
-                  Starter
-                </h2>
-                {currentPlan === "Starter" && (
-                  <span className="inline-block mt-2 px-3 py-1 text-sm bg-green-100 text-green-800 rounded-full">
-                    Current Plan
-                  </span>
-                )}
+                <div className="flex gap-2 items-center">
+                  <h2 className="text-lg leading-6 font-medium text-gray-900">
+                    Starter
+                  </h2>
+                  {currentPlan === "Starter" && (
+                    <span className="inline-block mt-2 px-3 py-1 text-sm bg-green-100 text-green-800 rounded-full">
+                      Current Plan
+                    </span>
+                  )}
+                </div>
                 <p className="mt-4 text-sm text-gray-500">
                   Perfect for occasional use
                 </p>

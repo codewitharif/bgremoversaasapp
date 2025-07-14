@@ -90,7 +90,7 @@ const Pricing = () => {
                     Starter
                   </h2>
                   {currentPlan === "Starter" && (
-                    <span className="inline-block mt-2 px-3 py-1 text-sm bg-green-100 text-green-800 rounded-full">
+                    <span className="inline-block mt-2 px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded-full">
                       Current Plan
                     </span>
                   )}

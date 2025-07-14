@@ -1,6 +1,70 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AppContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@clerk/clerk-react";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const Pricing = () => {
+  const { backend, loadcreditsData } = useContext(AppContext);
+  const navigate = useNavigate();
+  const { getToken } = useAuth();
+
+  const initPay = async (order) => {
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+      amount: order.amount,
+      currency: order.currency,
+      name: "Credits Payment",
+      description: "Credits Payment",
+      order_id: order.id,
+      receipt: order.receipt,
+      handler: async (response) => {
+        console.log(response);
+
+        const token = await getToken();
+        try {
+          const { data } = await axios.post(
+            backend + "/api/user/verify-razor",
+            response,
+            { headers: { token } }
+          );
+
+          if (data.success) {
+            loadcreditsData();
+            navigate("/");
+            toast.success("credit added");
+          }
+        } catch (error) {
+          console.log(error);
+          toast.error(error.message);
+        }
+      },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  };
+
+  const paymentRazorpay = async (planId) => {
+    try {
+      const token = await getToken();
+      const { data } = await axios.post(
+        backend + "/api/user/pay-razor",
+        { planId },
+        { headers: { token } }
+      );
+
+      if (data.success) {
+        initPay(data.order);
+      } else {
+        console.log("my error message else bloxk", data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
   return (
     <div id="pricing" className="py-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,7 +98,10 @@ const Pricing = () => {
                     /month
                   </span>
                 </p>
-                <button className="mt-8 block w-full bg-gray-800 border border-gray-800 rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-gray-900">
+                <button
+                  onClick={() => paymentRazorpay("Starter")}
+                  className="mt-8 block w-full bg-gray-800 border border-gray-800 rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-gray-900"
+                >
                   Buy Starter
                 </button>
               </div>
@@ -114,7 +181,10 @@ const Pricing = () => {
                     /month
                   </span>
                 </p>
-                <button className="mt-8 block w-full bg-indigo-600 border border-indigo-600 rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-indigo-700">
+                <button
+                  onClick={() => paymentRazorpay("Professional")}
+                  className="mt-8 block w-full bg-indigo-600 border border-indigo-600 rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-indigo-700"
+                >
                   Buy Professional
                 </button>
               </div>
@@ -211,7 +281,10 @@ const Pricing = () => {
                     /month
                   </span>
                 </p>
-                <button className="mt-8 block w-full bg-gray-800 border border-gray-800 rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-gray-900">
+                <button
+                  onClick={() => paymentRazorpay("Enterprise")}
+                  className="mt-8 block w-full bg-gray-800 border border-gray-800 rounded-md py-2 text-sm font-semibold text-white text-center hover:bg-gray-900"
+                >
                   Buy Enterprise
                 </button>
               </div>

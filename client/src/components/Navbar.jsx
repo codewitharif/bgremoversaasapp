@@ -13,7 +13,7 @@ const Navbar = () => {
   const { openSignIn } = useClerk();
   const { isSignedIn, user } = useUser();
 
-  const { credit, loadcreditsData } = useContext(AppContext);
+  const { credit, loadcreditsData, currentPlan } = useContext(AppContext);
 
   //   useEffect(() => {
   //     loadcreditsData();

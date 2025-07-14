@@ -9,6 +9,7 @@ export const AppContext = createContext();
 
 export const AppContextProvider = ({ children }) => {
   const [credit, setCredit] = useState(0); // Initialize with 0 instead of false
+  const [currentPlan, setCurrentPlan] = useState("");
   const backend = import.meta.env.VITE_BACKEND_URL;
   const [image, setImage] = useState(null);
   const [resultImage, setResultImage] = useState(null);
@@ -29,6 +30,7 @@ export const AppContextProvider = ({ children }) => {
 
       if (data.success) {
         setCredit(data.credits);
+        setCurrentPlan(data.currentPlan)
       }
     } catch (error) {
       console.error("Credit load error:", error);
@@ -96,6 +98,7 @@ export const AppContextProvider = ({ children }) => {
     isLoading,
     isProcessing,
     setIsProcessing,
+    currentPlan, setCurrentPlan
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

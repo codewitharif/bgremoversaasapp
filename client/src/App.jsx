@@ -7,6 +7,7 @@ import Result from "./pages/Result";
 import BuyCredit from "./pages/BuyCredit";
 import { ToastContainer } from "react-toastify";
 import { SignIn } from "@clerk/clerk-react";
+import Pricing from "./components/Pricing";
 
 const App = () => {
   return (
@@ -18,7 +19,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/result" element={<Result />} />
-          <Route path="/buy-credit" element={<BuyCredit />} />
+          <Route path="/buy-credit" element={<Pricing />} />
           <Route
             path="/sign-in"
             element={

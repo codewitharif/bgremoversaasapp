@@ -40,6 +40,7 @@ export const AppContextProvider = ({ children }) => {
 
   const removeBg = async (imageFile) => {
     if (!isSignedIn) {
+      toast.error("Please Login to continue!");
       navigate("/sign-in");
       return;
     }

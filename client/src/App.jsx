@@ -20,9 +20,12 @@ const App = () => {
           <Route path="/result" element={<Result />} />
           <Route path="/buy-credit" element={<BuyCredit />} />
           <Route
-            className="flex justify-center items-center"
             path="/sign-in"
-            element={<SignIn routing="path" path="/sign-in" />}
+            element={
+              <div className="flex justify-center items-center min-h-screen">
+                <SignIn routing="path" path="/sign-in" />
+              </div>
+            }
           />
         </Routes>
       </main>

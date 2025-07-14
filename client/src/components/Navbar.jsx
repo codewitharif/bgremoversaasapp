@@ -89,7 +89,7 @@ const Navbar = () => {
                       alt="Credits"
                       className="h-4 w-4 object-contain" // Adjusted size to be smaller
                     />
-                    <span className="text-gray-500">Credits:</span>
+                    <span className="text-gray-500 sm:hidden">Credits:</span>
                     <span className="font-bold text-blue-600">{credit}</span>
                   </button>
                   <UserButton />

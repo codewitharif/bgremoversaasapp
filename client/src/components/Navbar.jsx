@@ -33,7 +33,7 @@ const Navbar = () => {
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <div className="flex-shrink-0 flex items-center">
-                <Link to="/">
+                <Link to="/" className="flex items-center">
                   <svg
                     className="h-8 w-8 text-indigo-600"
                     xmlns="http://www.w3.org/2000/svg"

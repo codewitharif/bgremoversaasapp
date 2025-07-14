@@ -59,6 +59,7 @@ const Pricing = () => {
         initPay(data.order);
       } else {
         console.log("my error message else bloxk", data.message);
+        toast.error(error.message);
       }
     } catch (error) {
       console.log(error);

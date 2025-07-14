@@ -30,7 +30,7 @@ export const AppContextProvider = ({ children }) => {
 
       if (data.success) {
         setCredit(data.credits);
-        setCurrentPlan(data.currentPlan)
+        setCurrentPlan(data.currentPlan);
       }
     } catch (error) {
       console.error("Credit load error:", error);
@@ -40,7 +40,7 @@ export const AppContextProvider = ({ children }) => {
 
   const removeBg = async (imageFile) => {
     if (!isSignedIn) {
-      openSignIn();
+      navigate("/sign-in");
       return;
     }
 
@@ -98,7 +98,8 @@ export const AppContextProvider = ({ children }) => {
     isLoading,
     isProcessing,
     setIsProcessing,
-    currentPlan, setCurrentPlan
+    currentPlan,
+    setCurrentPlan,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
